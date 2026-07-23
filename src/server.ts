@@ -6,7 +6,7 @@ const app = fastify();
 
 // Configuración CORS estricta para desarrollo con credenciales
 app.register(fastifyCors, { 
-  origin: 'http://localhost:3005',
+  origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true 

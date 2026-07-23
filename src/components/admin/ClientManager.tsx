@@ -110,7 +110,7 @@ export default function ClientManager() {
       if (json.status === 'success') {
         addToast(`Plan actualizado a ${plan}`, 'success');
         fetchClients();
-        setSelectedClient(prev => prev ? { ...prev, private_config: { ...prev.private_config, plan } } : null);
+        setSelectedClient((prev: any) => prev ? { ...prev, private_config: { ...prev.private_config, plan } } : null);
       } else {
         throw new Error(json.error?.message || 'Error al actualizar plan');
       }

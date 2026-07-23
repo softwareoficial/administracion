@@ -1,0 +1,107 @@
+
+> plataforma-mercado-pago-node@1.0.0 lint
+> eslint src --fix
+
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/Dock.js
+  10:31  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/Dock.tsx
+  22:3   warning  'role' is defined but never used              @typescript-eslint/no-unused-vars
+  27:10  warning  'lang' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  27:16  warning  'setLang' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/ThemeSwitcher.js
+  11:31  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/auth/ProfilePanel.d.ts
+  2:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/auth/ProfilePanel.tsx
+  3:10  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/debug/DebugResponsePanel.d.ts
+  2:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/employees/EditPermissionsModal.d.ts
+  2:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/employees/EmployeeActivityModal.d.ts
+  2:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/employees/EmployeeCard.d.ts
+  2:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  4:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  5:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/employees/EmployeeCard.js
+  10:31  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/employees/EmployeesPanel.js
+  12:46  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/loading/LoadingProvider.js
+  11:34  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/sales/CategoryGrid.js
+  8:31  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/sales/SalesPanel.js
+  13:36  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/sales/SalesPanel.tsx
+  10:8   warning  'QuickProductModal' is defined but never used         @typescript-eslint/no-unused-vars
+  38:10  warning  'selectedProduct' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/stock/AddProductModal.d.ts
+  3:22  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  4:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/stock/StockCard.d.ts
+  2:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  3:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/stock/StockCard.js
+  10:42  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/components/stock/StockPanel.js
+  12:36  error  Parsing error: Argument expression expected
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/infrastructure/command_registry.js
+  11:13  error  Do not assign to the variable `module`. See: https://nextjs.org/docs/messages/no-assign-module-variable  @next/next/no-assign-module-variable
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/infrastructure/command_registry.ts
+  14:7  error  Do not assign to the variable `module`. See: https://nextjs.org/docs/messages/no-assign-module-variable  @next/next/no-assign-module-variable
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/lib/auth.d.ts
+   1:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   1:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   3:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   7:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:82  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  15:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  19:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/lib/auth.js
+  25:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  41:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  57:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  70:12  error  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/lib/auth.ts
+  23:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  39:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  54:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  66:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/lib/localStorageSync.d.ts
+  5:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  6:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/adrian/Escritorio/Nueva_carpeta/administracion/src/lib/logger.js
+  6:31  error  Parsing error: Argument expression expected
+
+✖ 48 problems (38 errors, 10 warnings)
+

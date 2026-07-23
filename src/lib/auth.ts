@@ -1,6 +1,6 @@
 import { apiClient } from './api';
 
-export const loginUser = async (username, password) => {
+export const loginUser = async (username: string, password: string) => {
   try {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('session_token');
@@ -25,7 +25,7 @@ export const loginUser = async (username, password) => {
   }
 };
 
-export const registerUser = async (username, password, nombreCliente) => {
+export const registerUser = async (username: string, password: string, nombreCliente: string) => {
   try {
     const response = await apiClient('/register', {
       method: 'POST',

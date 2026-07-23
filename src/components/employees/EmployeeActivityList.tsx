@@ -22,43 +22,7 @@ export default function EmployeeActivityList({ userId }: { userId?: string }) {
       const result = await response.json();
 
       if (result.success && Array.isArray(result.data)) {
-        // --- PROCESAMIENTO: Agrupar Ventas ---
-        const salesMap: Record<string, any> = {};
-        const rawEvents = result.data;
-
-        rawEvents.forEach((event: any) => {
-          const detalle = event.detalle || event.payload || {};
-          const cmd = event.comando || event.command || '';
-          const path = detalle.path || '';
-
-          if (cmd === 'USER:push-item') {
-            const saleId = detalle.item?.sale_id || detalle.item?.id;
-            if (saleId) {
-              if (!salesMap[saleId]) {
-                salesMap[saleId] = {
-                  id: saleId,
-                  items: [],
-                  fecha: null,
-                  total: 0,
-                };
-              }
-              if (path === 'sale_items') {
-                salesMap[saleId].items.push({
-                  name: detalle.item.product_code, // Ajustar si hay nombre
-                  qty: detalle.item.qty || 1,
-                  price: detalle.item.price || 0,
-                });
-                salesMap[saleId].total +=
-                  detalle.item.price * (detalle.item.qty || 1);
-              }
-              if (path === 'sales_orders') {
-                salesMap[saleId].fecha = detalle.item.createdAt;
-              }
-            }
-          }
-        });
-
-        setTimeline(Object.values(salesMap));
+        setTimeline(result.data);
       } else {
         setTimeline([]);
       }
@@ -83,9 +47,9 @@ export default function EmployeeActivityList({ userId }: { userId?: string }) {
 
   return (
     <div style={{ padding: 'var(--space-md)' }}>
-      <h2>Ventas realizadas</h2>
+      <h2>Actividad reciente</h2>
       {timeline.length === 0 ? (
-        <p>No hay ventas registradas.</p>
+        <p>No hay actividad registrada.</p>
       ) : (
         <ul
           style={{
@@ -96,12 +60,12 @@ export default function EmployeeActivityList({ userId }: { userId?: string }) {
             gap: 'var(--space-sm)',
           }}
         >
-          {timeline.map((sale) => (
+          {timeline.map((event: any, index: number) => (
             <li
-              key={sale.id}
+              key={index}
               style={{
-                backgroundColor: 'var(--color-success-bg)',
-                border: '1px solid #bbf7d0',
+                backgroundColor: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
                 borderRadius: 'var(--radius-lg)',
                 padding: 'var(--space-md)',
                 boxShadow: 'var(--shadow-card)',
@@ -115,16 +79,13 @@ export default function EmployeeActivityList({ userId }: { userId?: string }) {
                 }}
               >
                 <div>
-                  <span style={{ fontWeight: 'bold' }}>Venta: {sale.id}</span>
+                  <span style={{ fontWeight: 'bold' }}>{event.comando || event.command || 'Evento'}</span>
                   <small style={{ display: 'block' }}>
-                    {sale.items.map((i: any) => i.name).join(', ')}
+                    {JSON.stringify(event.payload || event.detalle || {})}
                   </small>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontWeight: '800', display: 'block' }}>
-                    ${sale.total.toFixed(2)}
-                  </span>
-                  <small>{formatDate(sale.fecha)}</small>
+                  <small>{formatDate(event.createdAt)}</small>
                 </div>
               </div>
             </li>

@@ -73,25 +73,6 @@ body {
 }
 
 /* Clases utilitarias globales */
-.stock-grid {
-  column-gap: var(--space-sm);
-  padding: var(--space-sm);
-  box-sizing: border-box;
-  width: 100%;
-  column-count: 1;
-}
-
-@media (min-width: 500px) {
-  .stock-grid {
-    column-count: 2;
-  }
-}
-
-@media (min-width: 700px) {
-  .stock-grid {
-    column-count: 3;
-  }
-}
 
 .masonry-item {
   break-inside: avoid;

@@ -131,7 +131,7 @@ export default function EmployeesPanel() {
           paddingBottom: '100px', // Espacio para el Dock
         }}
       >
-        <EmployeeActivityList userId={selectedEmployeeId || undefined} />
+        <EmployeeActivityList {...(selectedEmployeeId ? { userId: selectedEmployeeId } : {})} />
       </div>
 
       {isCreateModalOpen && (

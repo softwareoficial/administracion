@@ -4,7 +4,7 @@
   "type": "module",
   "main": "src/server.ts",
   "scripts": {
-    "start": "next start",
+    "start": "concurrently \"next start\" \"tsx src/server.ts\"",
     "build": "next build",
     "dev": "next dev -p 3005",
     "lint": "eslint src --fix",

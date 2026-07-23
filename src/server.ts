@@ -30,7 +30,7 @@ async function executeInfraCommand(
       Authorization: `Bearer ${ADMIN_TOKEN}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ token: ADMIN_TOKEN, command, payload }),
+    body: JSON.stringify({ token: ADMIN_TOKEN, cmd: command, payload }),
   });
 
   if (!response.ok) {

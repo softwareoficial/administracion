@@ -26,7 +26,7 @@ export default function EmployeeActivityList({ userId }: { userId?: string }) {
         const salesMap: Record<string, any> = {};
         const rawEvents = result.data;
 
-        rawEvents.forEach((event) => {
+        rawEvents.forEach((event: any) => {
           const detalle = event.detalle || event.payload || {};
           const cmd = event.comando || event.command || '';
           const path = detalle.path || '';

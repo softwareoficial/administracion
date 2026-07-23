@@ -1,11 +1,9 @@
 import { BaseCommand, CommandContext, CommandResult } from './base';
-import { PrismaClient } from '../../generated/prisma';
 import { MPService } from '../../infrastructure/mp_service';
 
 export class CreatePaymentCommand extends BaseCommand<object> {
   public readonly name = 'create_payment';
-  private prisma: PrismaClient = new PrismaClient();
-  private mpService: MPService = new MPService(this.prisma);
+  private mpService: MPService = new MPService();
 
   public async execute(
     context: CommandContext,

@@ -91,9 +91,9 @@ app.post('/api/payments', async (req: FastifyRequest): Promise<object> => {
 });
 
 app.listen(
-  { port: Number(process.env.PORT) || 8080, host: '0.0.0.0' },
+  { port: Number(process.env.BACKEND_PORT) || 8081, host: '0.0.0.0' },
   (err) => {
     if (err) throw err;
-    console.log('Backend listening on port ' + (process.env.PORT || 8080));
+    console.log('Backend listening on port ' + (process.env.BACKEND_PORT || 8081));
   },
 );

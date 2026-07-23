@@ -97,7 +97,11 @@ export default function WelcomePage() {
     >
       {renderContent()}
       {isProfileOpen && user && (
-        <ProfilePanel user={user} onClose={() => setIsProfileOpen(false)} />
+        <ProfilePanel
+          user={user}
+          subscription={user.subscription || { plan: 'free', trial_start_date: null, days_remaining: null }}
+          onClose={() => setIsProfileOpen(false)}
+        />
       )}
       <Dock
         onLogout={handleLogout}

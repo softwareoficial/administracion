@@ -2,12 +2,15 @@
 
 interface ProfilePanelProps {
   user: any;
+  subscription: {
+    plan: string;
+    trial_start_date: string;
+    days_remaining: number | null;
+  };
   onClose: () => void;
 }
 
-export default function ProfilePanel({ user, onClose }: ProfilePanelProps) {
-  const plan = user.role_name === 'DUEÑO' ? 'PRO' : 'FREEMIUM';
-
+export default function ProfilePanel({ user, subscription, onClose }: ProfilePanelProps) {
   return (
     <div
       style={{
@@ -25,38 +28,41 @@ export default function ProfilePanel({ user, onClose }: ProfilePanelProps) {
     >
       <div
         style={{
-          backgroundColor: 'var(--color-background)',
-          padding: '2rem',
+          backgroundColor: 'var(--color-surface)',
+          padding: '1.5rem',
           borderRadius: '16px',
-          width: '90%',
+          width: '95%',
           maxWidth: '400px',
           color: 'var(--color-text)',
-          fontFamily: 'sans-serif',
           border: '1px solid var(--color-border)',
+          boxShadow: 'var(--shadow-lg)',
         }}
       >
         <h2 style={{ marginTop: 0 }}>Mi Cuenta</h2>
-        <div style={{ marginBottom: '1rem' }}>
+        <div style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>
+          <p><strong>Usuario:</strong> {user.username}</p>
+          <p><strong>Negocio:</strong> {user.cliente_nombre}</p>
           <p>
-            <strong>Usuario:</strong> {user.username}
-          </p>
-          <p>
-            <strong>Denominación:</strong> {user.cliente_nombre}
-          </p>
-          <p>
-            <strong>Rol:</strong> {user.role_name}
-          </p>
-          <p>
-            <strong>Plan Actual:</strong>{' '}
-            <span style={{ fontWeight: 'bold', color: 'var(--color-primary)' }}>
-              {plan}
+            <strong>Plan:</strong>{' '}
+            <span style={{ fontWeight: 'bold', color: subscription.plan === 'pro' ? 'var(--color-primary)' : 'var(--color-text-muted)' }}>
+              {subscription.plan.toUpperCase()}
             </span>
           </p>
+          {subscription.days_remaining !== null && (
+            <p>
+              <strong>Días restantes de prueba:</strong> {subscription.days_remaining}
+            </p>
+          )}
+          {subscription.trial_start_date && (
+            <p>
+              <strong>Inicio del plan:</strong> {new Date(subscription.trial_start_date).toLocaleDateString()}
+            </p>
+          )}
         </div>
         <button
           onClick={onClose}
           className="btn-secondary"
-          style={{ width: '100%' }}
+          style={{ width: '100%', padding: '0.8rem', marginTop: '1rem' }}
         >
           Cerrar
         </button>

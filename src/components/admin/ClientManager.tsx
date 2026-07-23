@@ -131,7 +131,7 @@ export default function ClientManager() {
   };
 
   return (
-    <div style={{ padding: 'var(--space-md)', maxWidth: '800px', margin: '0 auto' }}>
+    <div style={{ padding: 'var(--space-md)', maxWidth: '600px', margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-md)' }}>
         <h2>Gestión de Clientes</h2>
         <button className="btn-primary" onClick={() => setIsCreateClientModalOpen(true)}>
@@ -139,53 +139,69 @@ export default function ClientManager() {
         </button>
       </div>
       
-      <div style={{ display: 'grid', gap: 'var(--space-md)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
         {clients.map((client) => (
           <div 
             key={client.id} 
-            onClick={() => setSelectedClient(client)}
             style={{
               background: 'var(--color-surface)',
               border: '1px solid var(--color-border)',
               borderRadius: 'var(--radius-lg)',
               boxShadow: 'var(--shadow-soft)',
-              cursor: 'pointer',
               padding: 'var(--space-md)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--space-sm)',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0 }}>{client.cliente_nombre}</h3>
-              <span style={{ fontSize: '0.8rem', color: 'var(--color-secondary)' }}>{client.username}</span>
+            <div 
+              onClick={() => setSelectedClient(selectedClient?.id === client.id ? null : client)}
+              style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+            >
+              <div>
+                <h3 style={{ margin: 0 }}>{client.cliente_nombre}</h3>
+                <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{client.username}</span>
+              </div>
+              <Icon name={selectedClient?.id === client.id ? 'menu' : 'add'} style={{ width: '20px', height: '20px' }} />
             </div>
-            <p>Plan: <strong>{getPlan(client)}</strong></p>
-            {client.private_config?.subscription?.plan_expiry_date && (
-              <p>Expira: {calculateRemainingTime(client.private_config.subscription.plan_expiry_date)}</p>
-            )}
             
             {selectedClient?.id === client.id && (
               <div style={{ marginTop: 'var(--space-md)', borderTop: '1px solid var(--color-border)', paddingTop: 'var(--space-md)', display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-                <h4>Detalles y Acciones</h4>
+                <div style={{ fontSize: '0.9rem', marginBottom: 'var(--space-sm)' }}>
+                  <p><strong>Plan:</strong> {getPlan(client).toUpperCase()}</p>
+                  <p><strong>Registro:</strong> {client.created_at ? new Date(client.created_at).toLocaleDateString() : 'N/A'}</p>
+                  {client.private_config?.subscription?.plan_expiry_date && (
+                    <p><strong>Expira:</strong> {calculateRemainingTime(client.private_config.subscription.plan_expiry_date)}</p>
+                  )}
+                </div>
+                
                 <select 
                   onChange={(e) => updatePlan(client.cliente_id, e.target.value)}
                   value={getPlan(client)}
                   style={{ padding: 'var(--space-sm)', width: '100%', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}
                 >
                   <option value="free">Free</option>
-                  <option value="pro">Pro (30 días)</option>
+                  <option value="pro">Pro</option>
                   <option value="enterprise">Enterprise</option>
                 </select>
+                
                 <button className="btn-secondary" onClick={() => setIsCreateUserModalOpen(true)}>
                   <Icon name="add" style={{ width: '18px', height: '18px', marginRight: '5px' }} />Crear Usuario
                 </button>
-                <button className="btn-error" onClick={() => alert(`Eliminar cliente: ${client.cliente_nombre}`)}>Eliminar Cliente</button>
+                <button 
+                    className="btn-error" 
+                    onClick={() => {
+                        if(confirm(`¿Eliminar cliente ${client.cliente_nombre}?`)) {
+                            // Aquí llamarías a un comando de borrar cliente si existiera
+                            alert('Funcionalidad de borrado de cliente requiere implementación de comando CLIENT:delete');
+                        }
+                    }}
+                >
+                    Eliminar Cliente
+                </button>
               </div>
             )}
           </div>
         ))}
       </div>
+
 
       {isCreateUserModalOpen && selectedClient && (
         <CreateUserModal 

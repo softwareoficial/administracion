@@ -99,7 +99,7 @@ export default function WelcomePage() {
       {isProfileOpen && user && (
         <ProfilePanel
           user={user}
-          subscription={user.subscription || { plan: 'free', trial_start_date: null, days_remaining: null }}
+          subscription={user.subscription || { plan: 'free', is_trial: false, days_remaining: null }}
           onClose={() => setIsProfileOpen(false)}
         />
       )}

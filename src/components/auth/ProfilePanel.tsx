@@ -4,7 +4,7 @@ interface ProfilePanelProps {
   user: any;
   subscription: {
     plan: string;
-    trial_start_date: string;
+    is_trial: boolean;
     days_remaining: number | null;
   };
   onClose: () => void;
@@ -45,17 +45,12 @@ export default function ProfilePanel({ user, subscription, onClose }: ProfilePan
           <p>
             <strong>Plan:</strong>{' '}
             <span style={{ fontWeight: 'bold', color: subscription.plan === 'pro' ? 'var(--color-primary)' : 'var(--color-text-muted)' }}>
-              {subscription.plan.toUpperCase()}
+              {subscription.plan.toUpperCase()} {subscription.is_trial ? '(Trial)' : ''}
             </span>
           </p>
           {subscription.days_remaining !== null && (
             <p>
-              <strong>Días restantes de prueba:</strong> {subscription.days_remaining}
-            </p>
-          )}
-          {subscription.trial_start_date && (
-            <p>
-              <strong>Inicio del plan:</strong> {new Date(subscription.trial_start_date).toLocaleDateString()}
+              <strong>Días restantes de suscripción:</strong> {subscription.days_remaining}
             </p>
           )}
         </div>

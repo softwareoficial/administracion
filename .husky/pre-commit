@@ -1,0 +1,9 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "--- Ejecutando verificaciones pre-commit ---"
+
+# Ejecutar linting
+npm run lint || { echo "Error de linting"; exit 1; }
+
+echo "--- Verificaciones completadas exitosamente ---"

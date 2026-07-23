@@ -3,8 +3,12 @@ import fastify, { FastifyRequest } from 'fastify';
 import fastifyCors from '@fastify/cors';
 
 const app = fastify();
+
+// Configuración CORS estricta para desarrollo con credenciales
 app.register(fastifyCors, { 
-  origin: 'http://localhost:4000',
+  origin: 'http://localhost:3005',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true 
 });
 
@@ -28,6 +32,12 @@ async function executeInfraCommand(
     body: JSON.stringify({ token: ADMIN_TOKEN, command, payload }),
   });
 
+  if (!response.ok) {
+    const text = await response.text();
+    console.error('Error desde infraestructura:', text);
+    throw new Error(`Error en infraestructura: ${response.statusText}`);
+  }
+
   const contentType = response.headers.get('content-type');
   if (!contentType || !contentType.includes('application/json')) {
     const text = await response.text();
@@ -37,6 +47,14 @@ async function executeInfraCommand(
 
   return await response.json();
 }
+
+// ENDPOINTS
+
+// Hotfix: Capturar peticiones a /execute y redirigirlas
+app.post('/execute', async (req: FastifyRequest): Promise<object> => {
+  const { command, payload } = req.body as { command: string; payload: object };
+  return await executeInfraCommand(command, payload);
+});
 
 app.post('/api/commands', async (req: FastifyRequest): Promise<object> => {
   const { command, payload } = req.body as { command: string; payload: object };

@@ -11,9 +11,9 @@ export class CommandRegistry {
     });
 
     for (const file of files) {
-      const module = await import(path.resolve(file));
-      for (const key in module) {
-        const CommandClass = module[key];
+      const commandModule = await import(path.resolve(file));
+      for (const key in commandModule) {
+        const CommandClass = commandModule[key];
         if (CommandClass.prototype instanceof BaseCommand) {
           const command = new CommandClass();
           this.commands.set(command.name, command);

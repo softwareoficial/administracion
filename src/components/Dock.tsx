@@ -1,0 +1,238 @@
+'use client';
+
+import { useTheme } from '../lib/theme/ThemeProvider';
+import Icon from './Icon';
+import { useState, useRef, useEffect } from 'react';
+import ThemeSwitcher from './ThemeSwitcher';
+import AuditPanel from './debug/AuditPanel';
+
+interface DockProps {
+  onLogout: () => void;
+  onNavigate: (
+    view: 'home' | 'admin'
+  ) => void;
+  onOpenProfile: () => void;
+}
+
+export default function Dock({
+  onLogout,
+  onNavigate,
+  onOpenProfile,
+}: DockProps) {
+  const { theme } = useTheme();
+  const [activePanel, setActivePanel] = useState<string>('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showAudit, setShowAudit] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const handleNavigate = (
+    view: 'home' | 'admin'
+  ) => {
+    setActivePanel(view);
+    onNavigate(view);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const iconStyle = {
+    width: '26.4px',
+    height: '26.4px',
+    color: 'var(--color-primary)',
+  };
+
+  const shadow =
+    theme === 'light'
+      ? '4px 4px 6px rgba(0, 0, 0, 0.1), -4px -4px 6px rgba(255, 255, 255, 0.5)'
+      : '4px 4px 6px rgba(0, 0, 0, 0.5), -4px -4px 6px rgba(255, 255, 255, 0.05)';
+
+  const activeButtonStyle = {
+    background: 'var(--color-background)',
+    borderRadius: '50%',
+    padding: 'calc(var(--space-sm) * 1.1)',
+    border: 'none',
+    boxShadow: shadow,
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
+  const defaultButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    padding: 'calc(var(--space-sm) * 1.1)',
+  };
+
+  const menuButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--space-sm)',
+    width: '100%',
+    padding: 'calc(var(--space-sm) * 1.1)',
+    color: 'var(--color-text)',
+    fontSize: '1.1rem',
+    borderRadius: 'var(--radius-md)',
+  };
+
+  const menuIconStyle = {
+    width: '22px',
+    height: '22px',
+    color: 'var(--color-secondary)',
+  };
+
+  return (
+    <nav
+      style={{
+        position: 'fixed',
+        bottom: 'var(--space-md)',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 'fit-content',
+        backgroundColor: 'var(--color-background)',
+        borderRadius: '27.5px',
+        border: '1px solid var(--color-border)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 'calc(var(--space-xs) * 1.1) calc(var(--space-md) * 1.1)',
+        zIndex: 1000,
+        boxShadow: 'var(--shadow-soft)',
+        gap: 'calc(var(--space-sm) * 1.1)',
+      }}
+    >
+      <button
+        onClick={() => handleNavigate('home')}
+        aria-label="Home"
+        style={activePanel === 'home' ? activeButtonStyle : defaultButtonStyle}
+      >
+        <Icon name="home" style={iconStyle} />
+      </button>
+
+      <button
+        onClick={() => handleNavigate('admin')}
+        aria-label="Administración"
+        style={
+          activePanel === 'admin' ? activeButtonStyle : defaultButtonStyle
+        }
+      >
+        <Icon name="user" style={iconStyle} />
+      </button>
+
+      <div ref={menuRef} style={{ position: 'relative' }}>
+        <button
+          onClick={toggleMenu}
+          aria-label="Menú"
+          style={defaultButtonStyle}
+        >
+          <Icon name="menu" style={iconStyle} />
+        </button>
+
+        {isMenuOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 'calc(100% + var(--space-md))',
+              right: '0',
+              backgroundColor: 'var(--color-background)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-lg)',
+              padding: 'var(--space-sm)',
+              display: 'flex',
+              flexDirection: 'column',
+              minWidth: '220px',
+              boxShadow: 'var(--shadow-soft)',
+            }}
+          >
+            <button
+              onClick={() => {
+                onOpenProfile();
+                toggleMenu();
+              }}
+              style={menuButtonStyle}
+            >
+              <Icon name="user" style={menuIconStyle} />
+              <span>Perfil</span>
+            </button>
+
+            <button
+              onClick={() => {
+                toggleMenu();
+              }}
+              style={menuButtonStyle}
+            >
+              <Icon name="settings" style={menuIconStyle} />
+              <span>Configuración</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setShowAudit(!showAudit);
+                toggleMenu();
+              }}
+              style={menuButtonStyle}
+            >
+              <Icon name="control" style={menuIconStyle} />
+              <span>Auditoría</span>
+            </button>
+
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: 'var(--space-sm) var(--space-md)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-sm)',
+                }}
+              >
+                <Icon name="theme" style={menuIconStyle} />
+                <span style={{ fontWeight: 600 }}>Tema</span>
+              </div>
+              <ThemeSwitcher />
+            </div>
+
+            <hr
+              style={{
+                width: '100%',
+                border: '0',
+                borderTop: '1px solid var(--color-border)',
+                margin: 'var(--space-sm) 0',
+              }}
+            />
+
+            <button
+              onClick={onLogout}
+              style={{ ...menuButtonStyle, color: 'var(--color-error)' }}
+            >
+              <Icon
+                name="logout"
+                style={{ ...menuIconStyle, color: 'var(--color-error)' }}
+              />
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
+        )}
+      </div>
+      {showAudit && <AuditPanel onClose={() => setShowAudit(false)} />}
+    </nav>
+  );
+}

@@ -1,1 +1,0 @@
-{"version":3,"file":"sync_infra.d.ts","sourceRoot":"","sources":["sync_infra.ts"],"names":[],"mappings":"AAAA,OAAO,EACL,WAAW,EACX,cAAc,EACd,aAAa,EACd,MAAM,iCAAiC,CAAC;AAEzC,qBAAa,gBAAiB,SAAQ,WAAW,CAAC,MAAM,CAAC;IACvD,SAAgB,IAAI,gBAAgB;IAEvB,OAAO,CAClB,OAAO,EAAE,cAAc,GACtB,OAAO,CAAC,aAAa,CAAC,MAAM,CAAC,CAAC;CAWlC"}

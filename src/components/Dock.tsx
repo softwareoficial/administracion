@@ -12,12 +12,14 @@ interface DockProps {
     view: 'home' | 'admin'
   ) => void;
   onOpenProfile: () => void;
+  role: string;
 }
 
 export default function Dock({
   onLogout,
   onNavigate,
   onOpenProfile,
+  role,
 }: DockProps) {
   const { theme } = useTheme();
   const [activePanel, setActivePanel] = useState<string>('home');

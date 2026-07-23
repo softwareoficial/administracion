@@ -23,7 +23,8 @@ async function executeInfraCommand(
     throw new Error('INFRA_URL no configurada');
   }
 
-  const response = await fetch(`${INFRA_URL}/execute`, {
+  const baseUrl = INFRA_URL.endsWith('/') ? INFRA_URL.slice(0, -1) : INFRA_URL;
+  const response = await fetch(`${baseUrl}/execute`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${ADMIN_TOKEN}`,

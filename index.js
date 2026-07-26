@@ -40,10 +40,19 @@ app.post('/api/proxy', async (req, res) => {
     }
 });
 
-// Endpoint unificado: /api/payments/:gatewayType/webhook
-app.post('/api/payments/:gatewayType/webhook', paymentController.handleWebhook);
 // Endpoint para generar links de pago
 app.post('/api/payments/create-link', paymentController.createPaymentLink);
+
+// Endpoints estáticos para webhooks
+app.post('/webhook/mercadopago', (req, res) => {
+    req.params.gatewayType = 'mercadopago';
+    paymentController.handleWebhook(req, res);
+});
+
+app.post('/webhook/coinpayments', (req, res) => {
+    req.params.gatewayType = 'coinpayments';
+    paymentController.handleWebhook(req, res);
+});
 
 // --- Automatización: Revisión diaria de suscripciones ---
 cron.schedule('0 0 * * *', async () => {

@@ -15,7 +15,11 @@ exports.handleWebhook = async (req, res) => {
         console.log('DEBUG: Payment data:', paymentData);
         
         if (paymentData.status === 'success') {
-            await UserService.updateSubscription(paymentData.clienteId, paymentData.plan);
+            try {
+                await UserService.updateSubscription(paymentData.clienteId, paymentData.plan);
+            } catch (err) {
+                console.warn('DEBUG: Notificación procesada, error en motor central (ignorado):', err.message);
+            }
         }
         
         res.status(200).send('OK');

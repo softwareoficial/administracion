@@ -71,13 +71,13 @@ cron.schedule('0 0 * * *', async () => {
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'out')));
 
-// Catch-all para rutas de la SPA (Frontend)
-app.get('*', (req, res) => {
-    // Si la ruta empieza con /api o /webhook, dejar que Express gestione el 404 (o lo que sea)
+// Catch-all para rutas de la SPA
+app.use((req, res, next) => {
+    // Si la ruta empieza con /api o /webhook, dejar que Express gestione (o continúe la cadena)
     if (req.path.startsWith('/api') || req.path.startsWith('/webhook')) {
-        return res.status(404).send('Not Found');
+        return next();
     }
-    // Servir el shell de la aplicación
+    // Para todo lo demás, servir index.html
     res.sendFile(path.join(__dirname, 'out', 'index.html'));
 });
 

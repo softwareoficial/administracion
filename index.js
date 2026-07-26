@@ -71,22 +71,14 @@ cron.schedule('0 0 * * *', async () => {
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'out')));
 
-const fs = require('fs');
-
-// Catch-all middleware para servir frontend (debe ir al final)
-app.use((req, res, next) => {
-    // Si no es una ruta de API o Webhook, buscar el archivo estático
-    if (!req.path.startsWith('/api') && !req.path.startsWith('/webhook')) {
-        const filePath = path.join(__dirname, 'out', req.path === '/' ? 'index.html' : `${req.path}.html`);
-        
-        if (fs.existsSync(filePath)) {
-            return res.sendFile(filePath);
-        }
-        
-        // Fallback a index.html (SPA)
-        return res.sendFile(path.join(__dirname, 'out/index.html'));
+// Catch-all para rutas de la SPA (Frontend)
+app.get('*', (req, res) => {
+    // Si la ruta empieza con /api o /webhook, dejar que Express gestione el 404 (o lo que sea)
+    if (req.path.startsWith('/api') || req.path.startsWith('/webhook')) {
+        return res.status(404).send('Not Found');
     }
-    next();
+    // Servir el shell de la aplicación
+    res.sendFile(path.join(__dirname, 'out', 'index.html'));
 });
 
 app.listen(process.env.PORT || 3000, () => {

@@ -4,11 +4,15 @@ const UserService = require('../services/userService');
 const PricingService = require('../services/pricingService');
 
 exports.handleWebhook = async (req, res) => {
+    console.log('DEBUG: Webhook hit. Params:', req.params, 'Body:', req.body);
     const { gatewayType } = req.params;
     
     try {
         const gateway = GatewayFactory.getGateway(gatewayType);
+        console.log('DEBUG: Gateway loaded:', gatewayType);
+        
         const paymentData = await gateway.processWebhook(req.body);
+        console.log('DEBUG: Payment data:', paymentData);
         
         if (paymentData.status === 'success') {
             await UserService.updateSubscription(paymentData.clienteId, paymentData.plan);
@@ -16,6 +20,7 @@ exports.handleWebhook = async (req, res) => {
         
         res.status(200).send('OK');
     } catch (error) {
+        console.error('DEBUG: Webhook error:', error);
         res.status(500).json({ error: error.message });
     }
 };

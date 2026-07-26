@@ -10,17 +10,22 @@ if (!process.env.ENGINE_URL || !process.env.ADMIN_TOKEN) {
 }
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Necesario para webhooks de CoinPayments
 
-// Middleware de registro de nivel superior: ¡Esto debe capturar TODO!
-app.use((req, res, next) => {
-    console.log(`[RAW LOG] ${req.method} ${req.url} - Headers:`, JSON.stringify(req.headers));
-    next();
+// Endpoint para ejecutar comandos administrativos
+app.post('/api/admin/command', async (req, res) => {
+    try {
+        const { command, payload } = req.body;
+        const result = await CommandRegistry.execute(command, payload);
+        res.json({ status: 'success', data: result });
+    } catch (error) {
+        res.status(400).json({ status: 'error', message: error.message });
+    }
 });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // Proxy directo al motor central
+const axios = require('axios');
 app.post('/api/proxy', async (req, res) => {
     try {
         const { command, payload } = req.body;
@@ -35,21 +40,19 @@ app.post('/api/proxy', async (req, res) => {
     }
 });
 
-// Endpoint para ejecutar comandos administrativos
-app.post('/api/admin/command', async (req, res) => {
-    try {
-        const { command, payload } = req.body;
-        const result = await CommandRegistry.execute(command, payload);
-        res.json({ status: 'success', data: result });
-    } catch (error) {
-        res.status(400).json({ status: 'error', message: error.message });
-    }
-});
-
-// Endpoint unificado y dinámico
-app.post('/api/payments/:gatewayType/webhook', paymentController.handleWebhook);
 // Endpoint para generar links de pago
 app.post('/api/payments/create-link', paymentController.createPaymentLink);
+
+// Endpoints estáticos para webhooks
+app.post('/webhook/mercadopago', (req, res) => {
+    req.params.gatewayType = 'mercadopago';
+    paymentController.handleWebhook(req, res);
+});
+
+app.post('/webhook/coinpayments', (req, res) => {
+    req.params.gatewayType = 'coinpayments';
+    paymentController.handleWebhook(req, res);
+});
 
 // --- Automatización: Revisión diaria de suscripciones ---
 cron.schedule('0 0 * * *', async () => {

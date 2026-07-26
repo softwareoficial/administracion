@@ -4,7 +4,8 @@ const axios = require('axios');
 
 class UserService {
     static async listUsers() {
-        const url = process.env.ENGINE_URL.endsWith('/execute') ? process.env.ENGINE_URL : `${process.env.ENGINE_URL}/execute`;
+        // Aseguramos que la URL sea limpia eliminando posibles dobles barras
+        const url = process.env.ENGINE_URL.replace(/\/+$/, '') + '/execute';
         const response = await axios.post(url, {
             token: process.env.ADMIN_TOKEN,
             command: 'SYSTEM:list-users-detailed',
@@ -14,7 +15,8 @@ class UserService {
     }
 
     static async updateSubscription(clienteId, plan) {
-        const url = process.env.ENGINE_URL.endsWith('/execute') ? process.env.ENGINE_URL : `${process.env.ENGINE_URL}/execute`;
+        // Aseguramos que la URL sea limpia eliminando posibles dobles barras
+        const url = process.env.ENGINE_URL.replace(/\/+$/, '') + '/execute';
         return await axios.post(url, {
             token: process.env.ADMIN_TOKEN,
             command: 'APP:update-client-plan',

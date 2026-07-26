@@ -71,7 +71,7 @@ cron.schedule('0 0 * * *', async () => {
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'frontend/out')));
 
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
     // Si la ruta empieza con /api, no servir index.html
     if (req.path.startsWith('/api') || req.path.startsWith('/webhook')) {
         return res.status(404).send('Not Found');

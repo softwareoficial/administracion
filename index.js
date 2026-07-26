@@ -69,13 +69,13 @@ cron.schedule('0 0 * * *', async () => {
 
 // Servir frontend estático (Next.js export)
 const path = require('path');
-app.use(express.static(path.join(__dirname, 'frontend/out')));
+app.use(express.static(path.join(__dirname, 'out')));
 
 // Catch-all middleware para servir frontend (debe ir al final)
 app.use((req, res, next) => {
     // Si no es una ruta de API o Webhook, servir index.html
     if (!req.path.startsWith('/api') && !req.path.startsWith('/webhook')) {
-        return res.sendFile(path.join(__dirname, 'frontend/out/index.html'));
+        return res.sendFile(path.join(__dirname, 'out/index.html'));
     }
     next();
 });

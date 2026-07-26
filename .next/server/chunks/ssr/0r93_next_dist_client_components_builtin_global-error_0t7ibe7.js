@@ -1,0 +1,3 @@
+module.exports=[71152,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(81909);a.n(d("[project]/Escritorio/www.softwareoficial.com/BASE DATOS/administracion/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},90723,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(81909);a.n(d("[project]/Escritorio/www.softwareoficial.com/BASE DATOS/administracion/node_modules/next/dist/client/components/builtin/global-error.js"))},46615,a=>{"use strict";a.i(71152);var b=a.i(90723);a.n(b)},56857,a=>{a.n(a.i(46615))}];
+
+//# sourceMappingURL=0r93_next_dist_client_components_builtin_global-error_0t7ibe7.js.map

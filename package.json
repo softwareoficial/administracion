@@ -1,8 +1,9 @@
 {
-  "name": "administracion-root",
+  "name": "administracion-final",
   "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
+    "build": "npm install && next build",
     "start": "node index.js"
   },
   "dependencies": {
@@ -12,7 +13,10 @@
     "express": "^5.2.1",
     "lucide-react": "^1.27.0",
     "mercadopago": "^3.2.1",
+    "next": "16.2.12",
     "node-cron": "^4.6.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "sonner": "^2.0.7"
   }
 }

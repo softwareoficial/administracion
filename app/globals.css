@@ -1,0 +1,16 @@
+:root {
+  --bg-color: #f0f0f0;
+  --dock-bg: rgba(255, 255, 255, 0.7);
+  --dock-border: rgba(255, 255, 255, 0.5);
+  --glass-blur: blur(20px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent; /* Quita el recuadro azul al tocar botones */
+  min-height: 100vh;
+  padding-bottom: calc(80px + var(--safe-area-bottom)); /* Espacio para el Dock */
+}

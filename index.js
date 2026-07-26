@@ -10,6 +10,13 @@ if (!process.env.ENGINE_URL || !process.env.ADMIN_TOKEN) {
 }
 
 const app = express();
+
+// --- LOGGING EXTREMO ---
+app.use((req, res, next) => {
+    console.log(`[EXTREME LOG] ${req.method} ${req.url} - Body: ${JSON.stringify(req.body)}`);
+    next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Necesario para webhooks de CoinPayments
 

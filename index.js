@@ -67,19 +67,19 @@ cron.schedule('0 0 * * *', async () => {
     await CommandRegistry.execute('SYSTEM:check-subscriptions', {});
 });
 
-// Servir frontend estático (Next.js export)
-const path = require('path');
-app.use(express.static(path.join(__dirname, 'out')));
-
-// Catch-all para rutas de la SPA
+// Catch-all para rutas de la SPA (debe ir ANTES de express.static)
 app.use((req, res, next) => {
-    // Si la ruta empieza con /api o /webhook, dejar que Express gestione (o continúe la cadena)
+    // Si es una ruta de API o Webhook, continuar
     if (req.path.startsWith('/api') || req.path.startsWith('/webhook')) {
         return next();
     }
-    // Para todo lo demás, servir index.html
+    // Servir el shell de la aplicación para cualquier otra ruta
     res.sendFile(path.join(__dirname, 'out', 'index.html'));
 });
+
+// Servir archivos estáticos después
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'out')));
 
 app.listen(process.env.PORT || 3000, () => {
     console.log('🚀 Motor de Administración (Multi-Pasarela) activo.');

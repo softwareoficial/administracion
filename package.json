@@ -1,0 +1,16 @@
+{
+  "name": "administracion-root",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node backend/index.js",
+    "build": "echo 'Build step skipped'"
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mercadopago": "^3.2.1",
+    "node-cron": "^4.6.0"
+  }
+}

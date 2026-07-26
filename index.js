@@ -4,10 +4,9 @@ const cron = require('node-cron');
 const paymentController = require('./src/controllers/paymentController');
 const CommandRegistry = require('./src/commands/commandRegistry');
 
-// Configuración estricta
+// Configuración resiliente: advertir si no están configuradas pero no detener el proceso
 if (!process.env.ENGINE_URL || !process.env.ADMIN_TOKEN) {
-    console.error('❌ ERROR: ENGINE_URL y ADMIN_TOKEN son obligatorios.');
-    process.exit(1);
+    console.warn('⚠️ WARNING: ENGINE_URL o ADMIN_TOKEN faltantes. El motor iniciará en modo limitado.');
 }
 
 const app = express();
